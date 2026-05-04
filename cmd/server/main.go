@@ -2,7 +2,6 @@ package main
 
 import (
 	"Servidor-Go/internal/handler"
-	"Servidor-Go/internal/storage"
 	"database/sql"
 	"fmt"
 	"net/http"
@@ -11,6 +10,10 @@ import (
 )
 
 const port = ":8080"
+
+type App struct {
+	DB *sql.DB
+}
 
 func main() {
 
@@ -27,23 +30,17 @@ func main() {
 
 	defer db.Close()
 
+	app := &App{DB: db}
+
 	//cria o servidor
 	router := http.NewServeMux()
 
 	router.HandleFunc("/registrar", func(w http.ResponseWriter, r *http.Request) {
-		handler.CreateLogHandler(w, r, db)
+		handler.CreateLogHandler(w, r, app.DB)
 	})
 
 	router.HandleFunc("/logs", func(w http.ResponseWriter, r *http.Request) {
-		storage.ListLogs(w, r, db)
-	})
-
-	router.HandleFunc("/logs/aceitos", func(w http.ResponseWriter, r *http.Request) {
-		storage.ListAccept(w, r, db)
-	})
-
-	router.HandleFunc("/logs/recusados", func(w http.ResponseWriter, r *http.Request) {
-		storage.ListRefuse(w, r, db)
+		handler.ListLogs(w, r, app.DB)
 	})
 
 	fmt.Println("Listening on port " + port)
