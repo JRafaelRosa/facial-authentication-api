@@ -73,3 +73,7 @@ A comunicação entre os módulos ocorre via JSON sobre HTTP.
   "position": "developer",
   "accuracy": 87.5
 }
+```
+
+---
+Desenvolvido por Joao Rafael dos Santos da Rosa. Estudante de Engenharia de Computação (UEPG) e Desenvolvedor Full Stack.
