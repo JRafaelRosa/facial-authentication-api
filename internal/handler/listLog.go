@@ -21,6 +21,13 @@ type APIResponse struct {
 }
 
 func ListLogs(w http.ResponseWriter, r *http.Request, db *sql.DB) {
+
+	if r.Method != "GET" {
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
 	query := "SELECT name, email, position, accuracy, status FROM access_log"
 
 	statusFilter := r.URL.Query().Get("status")
@@ -65,13 +72,4 @@ func WriteJSON(w http.ResponseWriter, status int, payload APIResponse) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(status)
 	json.NewEncoder(w).Encode(payload)
-}
-
-func GetLogs(db *sql.DB, status string) (*sql.Rows, error) {
-	query := "SELECT name, email, position, accuracy, status FROM access_log"
-	if status != "" {
-		query += " WHERE status = ?"
-		return db.Query(query, status)
-	}
-	return db.Query(query)
 }

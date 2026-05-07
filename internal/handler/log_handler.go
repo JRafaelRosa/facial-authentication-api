@@ -14,7 +14,7 @@ func CreateLogHandler(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 
 	if r.Method != "POST" {
 		w.WriteHeader(http.StatusMethodNotAllowed)
-		fmt.Fprint(w, "Método não autorizado")
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
 
@@ -33,17 +33,17 @@ func CreateLogHandler(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 		_ = storage.StoreLog(db, log)
 
 		w.WriteHeader(http.StatusForbidden)
-		fmt.Fprint(w, "Falha ao validar pessoa ", err.Error())
+		http.Error(w, "Falha ao validar pessoa "+err.Error(), http.StatusForbidden)
 		return
 	}
 
 	err = storage.StoreLog(db, log)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprint(w, "Falha ao Salvar log no banco", err)
+		fmt.Fprintf(w, "Falha ao Salvar log no banco", err)
 		return
 	}
 
 	w.WriteHeader(http.StatusCreated)
-	fmt.Fprint(w, "Log registrado! Status: %s. Bem-vindo, %s", log.Status, log.Person.Name)
+	fmt.Fprintf(w, "Log registrado! Status: %s. Bem-vindo, %s", log.Status, log.Person.Name)
 }
