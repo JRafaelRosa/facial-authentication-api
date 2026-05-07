@@ -4,6 +4,12 @@ Sistema híbrido de autenticação biométrica baseado em reconhecimento facial,
 
 ---
 
+## 🚧 Status do Projeto
+
+Projeto em desenvolvimento e refinamento contínuo da precisão do reconhecimento facial.
+
+---
+
 ## 🧠 Visão Geral do Sistema
 
 O sistema simula um controle de acesso biométrico dividido em dois componentes principais:
@@ -76,4 +82,5 @@ A comunicação entre os módulos ocorre via JSON sobre HTTP.
 ```
 
 ---
-Desenvolvido por Joao Rafael dos Santos da Rosa. Estudante de Engenharia de Computação (UEPG) e Desenvolvedor Full Stack.
+Desenvolvido por João Rafael dos Santos da Rosa.
+Estudante de Engenharia de Computação (UEPG) com foco em Backend, APIs REST e Visão Computacional.
